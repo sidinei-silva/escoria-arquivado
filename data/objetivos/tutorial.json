@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "descricao": "Cadeia de objetivos do tutorial da PoC (A Margem Calada).",
+    "cadeia": "tutorial_margem_calada"
+  },
+  "objetivos": [
+    {
+      "id": "tut_01_chegada",
+      "abertura": "cadeia",
+      "cadeia": "tutorial_margem_calada",
+      "janela": { "tipo": "permanente" },
+      "passo": 1,
+      "zona": "a_ressaca",
+      "texto": "Levante-se e ande até onde o velho espera.",
+      "condicao": {
+        "tipo": "alcancar_local",
+        "zona": "a_ressaca",
+        "local": "ponto_guia"
+      },
+      "dialogo_abertura": "dialog_passo1_abertura",
+      "dialogo_conclusao": "dialog_passo1_reacao",
+      "proximo": "tut_02_primeira_arma"
+    },
+    {
+      "id": "tut_04_coleta",
+      "abertura": "cadeia",
+      "cadeia": "tutorial_margem_calada",
+      "janela": { "tipo": "permanente" },
+      "passo": 4,
+      "zona": "o_verde_surdo",
+      "texto": "O ferro não nasce pronto. Junte o que o lugar oferece.",
+      "condicao": {
+        "tipo": "possuir_recursos",
+        "itens": [
+          { "recurso": "PH_REC_MADEIRA", "qtd": 6 },
+          { "recurso": "PH_REC_PEDRA", "qtd": 6 }
+        ]
+      },
+      "dialogo_abertura": "dialog_passo4_abertura",
+      "dialogo_conclusao": "dialog_passo4_reacao",
+      "dialogo_espera": "dialog_passo4_espera",
+      "proximo": "tut_05_forja"
+    }
+  ]
+}

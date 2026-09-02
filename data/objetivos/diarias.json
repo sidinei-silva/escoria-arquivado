@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "descricao": "Objetivos com janela diária. Progresso conta desde o último reset."
+  },
+  "objetivos": [
+    {
+      "id": "dia_col_madeira_50",
+      "abertura": "catalogo",
+      "janela": { "tipo": "diaria", "reset_utc": "00:00" },
+      "categoria": "coleta",
+      "texto": "Colha 50 de madeira bruta hoje.",
+      "condicao": {
+        "tipo": "acumular_recurso",
+        "recurso": "PH_REC_MADEIRA",
+        "qtd": 50
+      },
+      "recompensa": { "lastro": 300 },
+      "mostra_progresso": true
+    }
+  ]
+}
