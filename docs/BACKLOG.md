@@ -29,13 +29,13 @@ Ideia que aparecer no caminho vai para [ideias/](ideias/).
 **Entrega:** o servidor sobe, carrega o conteúdo e falha claro se algo estiver
 errado. Ninguém joga nada.
 
-- [ ] `go mod init escoria`, esqueleto `cmd/` + `internal/`
+- [x] `go mod init escoria`, esqueleto `cmd/` + `internal/`
 - [ ] Carregador de `data/` — lê, tipa e expõe. Sem regra de negócio
-- [ ] `data/zonas.json` com A Ressaca
+- [x] `data/zonas.json` com A Ressaca
 - [ ] Validar referências no boot: objetivo aponta para zona que existe? diálogo
       aponta para objetivo que existe? recurso citado existe?
-- [ ] Falha no boot com mensagem legível quando uma referência quebra
-- [ ] `/health`
+- [x] Falha no boot com mensagem legível quando uma referência quebra
+- [x] `/health`
 
 **Sem** banco, **sem** rede de jogo, **sem** cliente. Mantenha curta — se
 crescer, virou arquitetura-primeiro.

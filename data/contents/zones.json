@@ -1,0 +1,43 @@
+{
+  "zones": [
+    {
+      "id": "a_ressaca",
+      "name": "A Ressaca",
+      "tier": 1,
+      "actions": ["gather", "combat"],
+      "resources": ["wood", "rough_stone"],
+      "adjacent_zones": ["a_bigorna"]
+    },
+    {
+      "id": "a_bigorna",
+      "name": "A Bigorna",
+      "actions": ["craft", "refine", "equip", "travel"],
+      "resources": [],
+      "adjacent_zones": ["a_ressaca", "o_verde_surdo", "a_costela"]
+    },
+    {
+      "id": "o_verde_surdo",
+      "name": "O Verde Surdo",
+      "tier": 2,
+      "actions": ["gather", "combat", "travel"],
+      "resources": ["birch", "leather"],
+      "adjacent_zones": ["a_bigorna"]
+    },
+    {
+      "id": "a_costela",
+      "name": "A Costela",
+      "tier": 2,
+      "actions": ["gather", "combat", "travel"],
+      "resources": ["copper", "cotton"],
+      "adjacent_zones": ["a_bigorna", "a_encruzilhada"]
+    },
+    {
+      "id": "a_encruzilhada",
+      "name": "A Encruzilhada",
+      "tier": 3,
+      "actions": ["gather", "combat", "travel"],
+      "resources": ["iron", "silk"],
+      "adjacent_zones": ["a_costela"]
+    }
+  ]
+}
