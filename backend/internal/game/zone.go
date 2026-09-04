@@ -1,6 +1,7 @@
-package zone
+package game
 
 type ZoneID string
+type ResourceID string
 
 type ActionType string
 
@@ -27,22 +28,6 @@ type Zone struct {
 	Name          string
 	Tier          int
 	Actions       map[ActionType]bool
-	Resources     []string
+	Resources     []ResourceID
 	AdjacentZones []ZoneID
-}
-
-func NewZone(id ZoneID, name string, tier int, actions []ActionType, resources []string, adjacentZones []ZoneID) *Zone {
-	actionMap := make(map[ActionType]bool)
-	for _, action := range actions {
-		actionMap[action] = true
-	}
-
-	return &Zone{
-		ID:            id,
-		Name:          name,
-		Tier:          tier,
-		Actions:       actionMap,
-		Resources:     resources,
-		AdjacentZones: adjacentZones,
-	}
 }

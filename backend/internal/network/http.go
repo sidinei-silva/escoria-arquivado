@@ -1,3 +1,4 @@
+// Package network define o servidor HTTP e seus endpoints de rede.
 package network
 
 import (

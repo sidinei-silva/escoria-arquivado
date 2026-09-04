@@ -11,6 +11,7 @@
     {
       "id": "a_bigorna",
       "name": "A Bigorna",
+      "tier": 1,
       "actions": ["craft", "refine", "equip", "travel"],
       "resources": [],
       "adjacent_zones": ["a_ressaca", "o_verde_surdo", "a_costela"]

@@ -1,0 +1,89 @@
+{
+  "objectives": {
+    "tutorial": [
+      {
+        "id": "tut_01_arrival",
+        "opening": "chain",
+        "chain": "tutorial_margem_calada",
+        "window": { "type": "permanent" },
+        "step": 1,
+        "zone": "a_ressaca",
+        "text": "Levante-se e ande até onde o velho espera.",
+        "condition": {
+          "type": "reach_place",
+          "zone": "a_ressaca",
+          "place": "ponto_guia"
+        },
+        "next": "tut_02_first_weapon"
+      },
+      {
+        "id": "tut_04_gathering",
+        "opening": "chain",
+        "chain": "tutorial_margem_calada",
+        "window": { "type": "permanent" },
+        "step": 4,
+        "zone": "a_ressaca",
+        "text": "O ferro não nasce pronto. Junte o que o lugar oferece.",
+        "condition": {
+          "type": "hold_resources",
+          "items": [
+            { "resource": "wood", "quantity": 6 },
+            { "resource": "rough_stone", "quantity": 6 }
+          ]
+        },
+        "next": "tut_05_forge"
+      }
+    ],
+
+    "journal": [
+      {
+        "id": "jrn_exp_leave_margem_calada",
+        "opening": "catalog",
+        "window": { "type": "permanent" },
+        "category": "exploration",
+        "subcategory": "crossings",
+        "text": "Atravesse A Encruzilhada e deixe a Margem Calada.",
+        "condition": {
+          "type": "reach_place",
+          "zone": "a_encruzilhada",
+          "place": "saida_ilha"
+        },
+        "reward": { "fame": 250, "ballast": 100 },
+        "unique": true
+      },
+      {
+        "id": "jrn_gat_wood_100",
+        "opening": "catalog",
+        "window": { "type": "permanent" },
+        "category": "gathering",
+        "subcategory": "wood",
+        "text": "Colha 100 de madeira bruta.",
+        "condition": {
+          "type": "accumulate_resource",
+          "resource": "wood",
+          "quantity": 100
+        },
+        "reward": { "fame": 500 },
+        "show_progress": true,
+        "next_milestone": "jrn_gat_wood_1000"
+      }
+    ],
+
+    "daily": [
+      {
+        "id": "day_gat_wood_50",
+        "opening": "catalog",
+        "window": { "type": "daily", "reset_utc": "00:00" },
+        "category": "gathering",
+        "text": "Colha 50 de madeira bruta hoje.",
+        "condition": {
+          "type": "accumulate_resource",
+          "resource": "wood",
+          "quantity": 50
+        },
+        "reward": { "ballast": 300 },
+        "show_progress": true
+      }
+    ]
+  }
+}

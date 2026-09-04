@@ -1,0 +1,84 @@
+{
+  "dialogs": {
+    "tutorial": [
+      {
+        "id": "dialog_step1_opening",
+        "step": 1,
+        "beat": "opening",
+        "trigger": "entered_zone",
+        "filters": { "zone": "a_ressaca" },
+        "requires_objective": "tut_01_arrival",
+        "once": true,
+        "lines": [
+          {
+            "speaker": "guia",
+            "text": "Mais um. Anda. A maré não traz quem ela não pode usar."
+          }
+        ],
+        "subtext": "Fala-âncora canônica. Ele não se surpreende porque recebe recém-chegados há tempo demais. 'Que ela não pode usar' é confissão disfarçada de saudação: a Escória usa as pessoas, e ele sabe porque foi usado. Não explica."
+      },
+      {
+        "id": "dialog_step4_opening",
+        "step": 4,
+        "beat": "opening",
+        "trigger": "entered_zone",
+        "filters": { "zone": "a_ressaca" },
+        "requires_objective": "tut_04_gathering",
+        "once": true,
+        "lines": [{ "speaker": "guia", "text": "..." }],
+        "subtext": "..."
+      },
+      {
+        "id": "dialog_step4_waiting",
+        "step": 4,
+        "beat": "waiting",
+        "trigger": "went_idle",
+        "requires_objective": "tut_04_gathering",
+        "delay_s": 30,
+        "once": false,
+        "lines": [{ "speaker": "guia", "text": "..." }],
+        "subtext": "..."
+      },
+      {
+        "id": "dialog_step6_npc",
+        "step": 6,
+        "beat": "npc",
+        "trigger": "met_npc",
+        "filters": { "npc": "portador_npc" },
+        "requires_objective": "tut_06_bearer",
+        "once": true,
+        "lines": [
+          { "speaker": "portador_npc", "text": "..." },
+          { "speaker": "guia", "text": "..." }
+        ],
+        "subtext": "As armas se reconhecem antes das pessoas."
+      },
+      {
+        "id": "dialog_step7_reaction",
+        "step": 7,
+        "beat": "reaction",
+        "trigger": "swapped_equipment",
+        "filters": { "slot": "weapon" },
+        "requires_objective": "tut_07_second_weapon",
+        "once": true,
+        "lines": [{ "speaker": "guia", "text": "..." }],
+        "subtext": "Único ponto do tutorial em que a palavra 'têmpera' aparece."
+      }
+    ],
+
+    "idle_barks": [
+      {
+        "id": "idle_warrior_01",
+        "trigger": "went_idle",
+        "filters": { "weapon_line": "warrior" },
+        "lines": [
+          {
+            "speaker": "guia",
+            "text": "Essa aí gosta de ficar de frente. Parado, ela só fica pesada."
+          }
+        ],
+        "subtext": "Ruído de domínio da linha Guerreiro (corte/frontline) sem nome mitológico. Insinua o 'gosto' da arma."
+      }
+    ]
+  }
+}
