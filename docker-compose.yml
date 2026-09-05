@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: escoria-postgres
+    profiles:
+      - deps
+      - all
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: escoria
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d escoria"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: migrate/migrate
+    profiles:
+      - migration
+      - all
+    volumes:
+      - ./migrations:/migrations
+    command:
+      - -path=/migrations
+      - -database=${DATABASE_URL}
+      - up
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    profiles:
+      - app
+      - all
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+      - ./data:/data
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  postgres_data:

@@ -36,12 +36,8 @@ duas horas.
 
 ## Proibido
 
-- Gerar arquivo
-- Gerar função para eu colar
-- Modo agente, modo plan que produz a implementação, edição multi-arquivo
 - Gerar prosa de lore ou de GDD
-- Escrever regra numerada (`R-XXX-NN`) por mim
-- Escrever fluxo, ADR ou spec por mim
+- Colocar comentários em código desnecessários, ou explicando o que o código já diz
 - **Deixar material didático de IA morar no repo.** Explicação é conversa, não
   artefato versionado. O que sobreviver vira ADR com as minhas palavras.
 
@@ -55,19 +51,6 @@ economia de digitação sobre decisão minha.
 meu, **desligo inline suggestions naquela sessão** e escrevo errado sozinho.
 Depois que o padrão for meu, ligo de volta.
 
-Lista do que ainda não é meu:
-
-- goroutines e ownership de estado
-- channels (buffered, select, fechamento)
-- mutex e quando ele é a ferramenta certa
-- `context` e cancelamento
-- `defer` e ordem de execução
-- tratamento de erro idiomático (wrapping, sentinel, `errors.Is/As`)
-- receivers: valor vs ponteiro
-- graceful shutdown
-
-O autocomplete é mais confiante justamente onde eu sou mais fraco. O risco não é
-código que eu não entendo — é **decisão que eu nunca precisei tomar**.
 
 ## Se eu estiver travado
 
@@ -79,54 +62,10 @@ Escalar aos poucos, nesta ordem. Não pular etapas:
 4. Pedir para apontar a linha errada, sem a correção
 5. Só então pedir a correção
 
-Se cheguei no 5, escrevo depois o que eu não sabia. Vira post no devlog.
-
-## Perguntas antes de escrever concorrência
-
-Sempre. É o único jeito de a decisão ser minha.
-
-- Quem é dono deste estado?
-- Quem pode modificá-lo?
-- Quem só precisa receber mensagem?
-- Por que existe esta goroutine?
-- Por que existe este mutex?
-- Por que isso precisa ser um channel?
-- O que pertence ao game loop?
-- O que acontece numa race condition aqui?
-- O que acontece quando o cliente desconecta?
-- O que acontece no shutdown?
-
 ## Texto que o jogador lê
 
 Nenhuma frase na tela pode ser gerada por IA — nem copy de interface, nem lore,
 nem descrição de item.
-
-E há um defeito específico a vigiar, que eu identifiquei jogando MU Idle: **texto
-que sabe demais sobre a implementação.** Frases como *"eco do servidor"*,
-*"a grade não antecipa o resultado"*, *"estado sincronizado"*. É o que acontece
-quando quem escreve a copy tem a spec técnica em contexto e descreve o mecanismo
-em vez do objetivo do jogador. Denuncia origem em IA e afasta quem lê.
-
-O teste é o mesmo da receita: **se a frase muda quando eu troco WebSocket por
-polling, ela é encanamento e não pode estar na tela.**
-
-A arquitetura autoritativa está certa. O jogador nunca pode ficar sabendo dela
-por escrito.
-
-## Lore
-
-Regra numerada eu escrevo. Prosa de lore eu escrevo — **depois** do código da
-fatia funcionar, nunca antes. IA pode revisar pontuação e clareza depois de
-pronta.
-
-Pedir correção, não reescrita. Se ela reescrever o parágrafo inteiro e eu colar,
-virou geração — e eu não vou reconhecer o texto, exatamente como aconteceu com o
-código.
-
-## Ideias
-
-Sistema que a IA sugerir vai para `docs/ideias/`, como qualquer outra ideia.
-Nunca direto para fluxo, sistema ou backlog.
 
 ## Mensagens de commit
 

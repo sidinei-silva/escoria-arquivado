@@ -30,9 +30,9 @@ Ideia que aparecer no caminho vai para [ideias/](ideias/).
 errado. Ninguém joga nada.
 
 - [x] `go mod init escoria`, esqueleto `cmd/` + `internal/`
-- [ ] Carregador de `data/` — lê, tipa e expõe. Sem regra de negócio
+- [x] Carregador de `data/` — lê, tipa e expõe. Sem regra de negócio
 - [x] `data/zonas.json` com A Ressaca
-- [ ] Validar referências no boot: objetivo aponta para zona que existe? diálogo
+- [x] Validar referências no boot: objetivo aponta para zona que existe? diálogo
       aponta para objetivo que existe? recurso citado existe?
 - [x] Falha no boot com mensagem legível quando uma referência quebra
 - [x] `/health`
@@ -42,7 +42,13 @@ crescer, virou arquitetura-primeiro.
 
 ---
 
-## Fatia 1 — Chegada · Passo 1
+## Fatia 1 - Criação da conta e login
+**Entrega:** o jogador cria uma conta, faz login e vê a tela de criação de
+personagem. Não consegue fazer nada ainda — só vê que existe.
+
+---
+
+## Fatia 2 — Chegada · Passo 1
 
 **Entrega:** o jogador cria um personagem, nasce em A Ressaca, é recebido pelo
 Guia e vê o primeiro objetivo. Não consegue fazer nada ainda — só vê que existe.
@@ -74,7 +80,7 @@ Fluxo: `gdd/fluxos/00-pre-jogo.md`, `gdd/fluxos/01-chegada.md`
 
 ---
 
-## Fatia 2 — A primeira arma · Passo 2
+## Fatia 3 — A primeira arma · Passo 2
 
 **Entrega:** o jogador recebe uma arma, equipa, e vê o loadout mudar.
 
@@ -102,7 +108,7 @@ Fluxo: `gdd/fluxos/02-primeira-arma.md`
 
 ---
 
-## Fatia 3 — O corpo age sozinho · Passo 3
+## Fatia 4 — O corpo age sozinho · Passo 3
 
 **Entrega:** o jogador mata o primeiro Mito sem Pacto, ganha Fama, e sente a
 Têmpera pela primeira vez.
@@ -145,7 +151,7 @@ Estudos: ownership e concorrência · tempo e atividades
 
 ---
 
-## Fatia 4 — A Escória dá · Passo 4
+## Fatia 5 — A Escória dá · Passo 4
 
 **Entrega:** o jogador coleta em loop no Verde Surdo e vê a mochila encher.
 
@@ -178,7 +184,7 @@ Estudos: tempo e atividades · persistência
 
 ---
 
-## Fatia 5 — A forja · Passo 5
+## Fatia 6 — A forja · Passo 5
 
 **Entrega:** o jogador viaja até A Bigorna, refina e cria seu primeiro item. O
 Guia apresenta a Têmpera **sem usar a palavra**.
@@ -207,7 +213,7 @@ Fluxo: `gdd/fluxos/05-forja.md`
 
 ---
 
-## Fatia 6 — O outro portador · Passo 6
+## Fatia 7 — O outro portador · Passo 6
 
 **Entrega:** encontro com o NPC-Portador n'A Costela. **As armas se reconhecem
 antes das pessoas.**
@@ -228,7 +234,7 @@ Fluxo: `gdd/fluxos/06-portador.md`
 
 ---
 
-## Fatia 7 — Tier 2
+## Fatia 8 — Tier 2
 
 **Entrega:** o jogador acessa zonas T2, coleta e luta em tier maior.
 
@@ -245,7 +251,7 @@ Fluxo: `gdd/fluxos/06-portador.md`
 
 ---
 
-## Fatia 8 — A segunda arma · Passo 7
+## Fatia 9 — A segunda arma · Passo 7
 
 **Entrega:** o jogador troca de arma e **sente a Têmpera esfriar**. Único
 momento do tutorial em que o Guia diz a palavra.
@@ -272,7 +278,7 @@ Fluxo: `gdd/fluxos/07-segunda-arma.md`
 
 ---
 
-## Fatia 9 — A Litania e a saída · Passo 8
+## Fatia 10 — A Litania e a saída · Passo 8
 
 **Entrega:** o jogador vê a Litania inteira e atravessa A Encruzilhada.
 **Fecha a PoC.**
