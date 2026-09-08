@@ -16,8 +16,8 @@ func loadJSON[T any](filePath string) (*T, error) {
 	}
 
 	var data T
-	err = json.Unmarshal(jsonFile, &data)
-	if err != nil {
+
+	if err := json.Unmarshal(jsonFile, &data); err != nil {
 		slog.Error("Falha ao fazer unmarshal do arquivo", "filePath", filePath, "err", err)
 		return nil, err
 	}

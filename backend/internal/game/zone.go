@@ -2,7 +2,6 @@ package game
 
 type ZoneID string
 type ResourceID string
-
 type ActionType string
 
 const (
@@ -27,7 +26,7 @@ type Zone struct {
 	ID            ZoneID
 	Name          string
 	Tier          int
-	Actions       map[ActionType]bool
+	Actions       []ActionType
 	Resources     []ResourceID
 	AdjacentZones []ZoneID
 }
