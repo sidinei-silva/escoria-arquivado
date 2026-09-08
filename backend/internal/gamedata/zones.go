@@ -13,6 +13,6 @@ type ZonesFile struct {
 	Zones []ZoneDefinition `json:"zones"`
 }
 
-func LoadZones(path string) (*ZonesFile, error) {
+func loadZones(path string) (*ZonesFile, error) {
 	return loadJSON[ZonesFile](path)
 }

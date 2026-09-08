@@ -7,10 +7,10 @@ import (
 	"escoria/internal/gamedata"
 )
 
-func BuildWorld(data *gamedata.ZonesFile) (*game.World, error) {
+func BuildWorld(data *gamedata.GameData) (*game.World, error) {
 	world := game.NewWorld()
 
-	for _, definition := range data.Zones {
+	for _, definition := range data.Zones.Zones {
 		zone, err := buildZone(definition)
 		if err != nil {
 			return nil, err

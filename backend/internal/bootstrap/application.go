@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"escoria/internal/account"
+	"escoria/internal/game"
 	"escoria/internal/gamedata"
 	httpnetwork "escoria/internal/network/http"
 	"escoria/internal/persistence/postgres"
@@ -22,6 +23,7 @@ import (
 type Application struct {
 	httpServer *httpnetwork.Server
 	db         *pgx.Conn
+	world      *game.World
 }
 
 func New() (*Application, error) {
@@ -43,12 +45,12 @@ func New() (*Application, error) {
 		return nil, err
 	}
 
-	zoneFile, err := gamedata.LoadZones(dataPath + "/zones.json")
+	data, err := gamedata.Load(dataPath)
 	if err != nil {
 		return nil, err
 	}
 
-	world, err := BuildWorld(zoneFile)
+	world, err := BuildWorld(data)
 	if err != nil {
 		return nil, err
 	}
@@ -66,11 +68,10 @@ func New() (*Application, error) {
 	accountHandler := httpnetwork.NewAccountHandler(accountService)
 	httpServer := httpnetwork.NewServer(accountHandler)
 
-	_ = world
-
 	return &Application{
 		httpServer: httpServer,
 		db:         db,
+		world:      world,
 	}, nil
 }
 
@@ -109,12 +110,6 @@ func loadDataPath() (string, error) {
 	}
 
 	return absolutePath, nil
-}
-
-type appError string
-
-func (e appError) Error() string {
-	return string(e)
 }
 
 func initLogger() {
