@@ -1,0 +1,23 @@
+# editores
+.obsidian/
+.vscode/
+.idea/
+
+# Go
+/bin/
+*.exe
+*.test
+*.out
+
+# node
+node_modules/
+dist/
+
+# banco local
+*.db
+*.db-journal
+*.sqlite
+
+# ambiente
+.env
+.env.local

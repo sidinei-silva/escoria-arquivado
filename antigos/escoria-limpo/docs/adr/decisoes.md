@@ -1,0 +1,268 @@
+# Decisões (ADRs)
+
+> Por que cada escolha foi feita. Uma entrada por decisão relevante de design ou arquitetura.
+> Ordem cronológica inversa não é necessária — numeração sequencial basta.
+>
+> Formato: **contexto** (o que forçou a decisão) → **decisão** → **consequência**.
+
+---
+
+## ADR-001 — A Litania tem três camadas, e a Têmpera é o diferencial
+
+**Data:** 21/07/2026
+
+**Contexto.** O GDD tinha duas afirmações incompatíveis: o modelo de Fama seguia Albion (fama
+por arma, nunca reseta), mas a Narrativa Jogada dizia que trocar de arma "zera a Fama". Uma
+das duas estava errada.
+
+**Decisão.** Três camadas independentes:
+
+1. **Linha do Catador** — espinha; ganha de qualquer ação; nunca reseta.
+2. **Fama por arma** — só com a arma equipada; nunca reseta.
+3. **Têmpera** — multiplicador efêmero da arma equipada; sobe com uso ativo da mesma arma;
+   **congela offline**; **reseta só na troca de arma**.
+
+A frase "trocar zera a Fama" era vestígio de versão antiga e foi removida do GDD.
+
+**Consequência.** Trocar de arma passa a ser **custo de oportunidade, não punição** — nada
+acumulado se perde, mas abandona-se um multiplicador maduro. Isso preserva o modelo Albion e
+o Pilar 2 ao mesmo tempo. A Têmpera vira o diferencial mecânico do projeto: recompensa
+presença ativa sem punir ausência.
+
+**Escopo.** PoC = Têmpera por arma. Pós-PoC = por loadout. Armadura existe na PoC mas ainda
+não carrega Têmpera.
+
+---
+
+## ADR-002 — "Idle" aqui não é offline-first
+
+**Data:** 21/07/2026
+
+**Contexto.** A definição de mercado de idle game (Cookie Clicker, RuneScape-idle) é
+offline-first: o jogo avança sozinho e o jogador volta para coletar. Uma proposta de mecânica
+foi rejeitada por assumir essa definição.
+
+**Decisão.** A Escória é um MMO de profundidade real para quem não tem tempo de input
+contínuo. Recompensa **presença ativa** e microgerenciamento. Offline **congela, não avança**.
+Idle significa "sem reflexo/APM exigido", não "joga sozinho enquanto você dorme".
+
+**Consequência.** É regra de arquitetura, não só de design (ver `specs/000-constituicao.md`,
+princípio 5). Habilita mecânicas como a Têmpera, que seriam punitivas num idle offline-first.
+Toda decisão de mecânica passa por esse filtro.
+
+---
+
+## ADR-003 — Nenhum conteúdo de terceiros no projeto
+
+**Data:** 21/07/2026
+
+**Contexto.** O backlog tinha tarefas para importar dados do Albion (`ao-bin-dumps`), e o GDD
+estava povoado de nomenclatura traduzida: recursos, mobs, estações de craft, nós de progressão.
+Pior: a Especificação da PoC **afirmava** que nenhum nome de terceiros entrava no projeto,
+enquanto a mesma página listava dezenas deles.
+
+**Decisão.** Nenhum dado, nome, asset, tabela ou lore de terceiros entra. Nada de importar,
+traduzir ou adaptar. Albion permanece como referência de **arquitetura de sistemas**
+(fama por uso, árvore por linha, loadout como identidade) — nunca de conteúdo.
+
+**Consequência.** As tarefas de importação foram reescritas para produção original. Todo nome
+derivado virou placeholder `PH_*` rastreável (ver `gdd/60-producao/placeholders.md`). Números
+de balanceamento permanecem como baseline a re-tunar — números não carregam identidade.
+
+---
+
+## ADR-004 — Identificadores de código seguem o lore em português
+
+**Data:** 21/07/2026
+
+**Contexto.** Com a renomeação de "Destiny Board" para "A Litania", três referências ficaram
+em código: `progression/destiny_board.json`, `GET /destiny-board`, e o pacote
+`internal/destiny/`. Manter código em inglês com lore em português é prática comum e legítima.
+
+**Decisão.** Código segue o lore: `internal/litania/`, `GET /litania`, `litania.json`,
+`player_litania_progress`. Módulo Go: `escoria`.
+
+**Consequência.** Um vocabulário só no projeto inteiro. Custo: identificadores em português
+com risco de acento — mitigado usando apenas ASCII em nomes de arquivo e símbolo.
+
+---
+
+## ADR-005 — Monorepo com specs, GDD e código juntos
+
+**Data:** 21/07/2026
+
+**Contexto.** Em projeto anterior (Eras do Brasil), GDD e código viviam em repos separados.
+Resultado observado: o GDD deixava de ser consultado durante o desenvolvimento. Distância
+gerou negligência.
+
+**Decisão.** Um repositório contendo `gdd/`, `specs/`, `data/`, `server/`, `web/`, `docs/`.
+O vault do Obsidian é a raiz do repo.
+
+**Consequência.** Spec e código mudam no mesmo commit — regra cardinal do SDD, impossível com
+repos separados. Contexto de IA é controlado apontando caminhos, não por fronteira de repo.
+Se o GDD crescer demais, dá para separar depois; o inverso é mais caro.
+
+---
+
+## ADR-006 — Specs param no contrato
+
+**Data:** 21/07/2026
+
+**Contexto.** No SDD com agente escrevendo código, specs são exaustivas — não deixam decisão
+em aberto. Aqui o implementador é humano, e um dos objetivos declarados do projeto é treinar
+engenharia.
+
+**Decisão.** Specs contêm: o quê, por quê, critérios de aceite, contratos de dados e API,
+ligações com o GDD, escopo negativo. **Não** contêm: estrutura interna de funções, algoritmos,
+tratamento de erro, onde quebrar arquivo.
+
+**Consequência.** O implementador projeta, não transcreve. Efeito colateral valioso: specs no
+nível de contrato quase não driftam, enquanto specs no nível de implementação viram mentira no
+primeiro dia em que o código diverge.
+
+---
+
+## ADR-007 — Backlog organizado em fatias verticais pelo fluxo do jogador
+
+**Data:** 21/07/2026
+
+**Contexto.** O backlog tinha 58 tarefas organizadas por fase e camada, com 8 tarefas órfãs e
+uma fase inchada (19 tarefas contra 2–4 nas demais). Havia também a preocupação de que ordenar
+por jornada do usuário contrariasse boa arquitetura.
+
+**Decisão.** Dez fatias verticais mapeando os 8 passos do tutorial. Cada fatia entrega algo
+visível ou jogável. Fatia 0 (fundação) é a única exceção e deve ser mínima.
+
+**Consequência.** Ordenar por jornada **é** boa prática (walking skeleton, vertical slice
+architecture) — arquitetura-primeiro adia aprendizado e validação. Para um projeto solo,
+motivação é restrição de engenharia legítima: projeto solo morre de abandono mais do que de
+arquitetura ruim.
+
+---
+
+## ADR-008 — Specs são direção de arte, não engenharia
+
+**Data:** 21/07/2026
+
+**Contexto.** O ADR-006 estabeleceu specs no nível de contrato, mas a primeira spec piloto
+ainda continha schema SQL, shapes de endpoint em JSON e tipos TypeScript. Isso é código —
+e código escrito pela IA remove exatamente a parte que Sidinei quer exercitar.
+
+**Decisão.** A IA atua como **diretora de arte**: descreve o que precisa existir, por quê, e
+o que precisa ser verdade no fim. Sidinei atua como **engenheiro-chefe**: projeta todas as
+estruturas. Specs descrevem em prosa e **fazem perguntas** em vez de dar respostas.
+
+A IA não escreve schema, shape de endpoint, tipo de cliente, assinatura de função nem
+algoritmo — nem como exemplo.
+
+**Exceção única.** A forma dos arquivos em `data/`. A IA os produz nos chats de conteúdo e o
+código os consome; forma não acordada significa arquivo que não carrega. Sidinei define a
+forma, a IA segue, e fica registrada na `dados.md` da fatia.
+
+**Consequência.** `contracts.md` virou `dados.md` e mudou de natureza: de especificação de
+shapes para descrição de necessidades + perguntas em aberto. Critérios de aceite ganham peso —
+com as estruturas em aberto, eles passam a ser o único contrato verificável.
+
+---
+
+## ADR-009 — Migração do GDD via exportação nativa, não transcrição
+
+**Data:** 21/07/2026
+
+**Contexto.** O GDD tem cerca de 25 páginas no Notion. A opção óbvia era a IA buscar cada uma e
+reescrever em Markdown.
+
+**Decisão.** Usar a exportação nativa do Notion (Markdown & CSV, com subpáginas) e limpar com
+script. A IA não transcreve conteúdo que já existe em formato exportável.
+
+**Consequência.** Mais fiel (tabelas, blocos de código e mermaid preservados), sem risco de erro
+de transcrição, e muito mais barato. O valor da IA fica onde ela é insubstituível: definir a
+estrutura de destino, escrever o script de limpeza e corrigir drift depois que o conteúdo
+aterrissar.
+
+**Efeito colateral.** O Notion vira arquivo morto depois da migração. Manter os dois vivos
+repetiria o erro dos placeholders — duas fontes da mesma verdade divergem.
+
+---
+
+## ADR-010 — Migração manual, revertendo o ADR-009
+
+**Data:** 21/07/2026
+
+**Contexto.** O ADR-009 decidiu migrar o GDD por exportação nativa do Notion, por ser mais fiel
+e mais barato. Sidinei reverteu com um argumento que o ADR-009 não considerou: **a exportação
+transporta o drift junto, em silêncio.** Duas seções inteiras (`00 · Overview` e `20 · Mundo`)
+nunca haviam sido revisadas, e o levantamento mostrou 45 páginas em vez das ~25 estimadas.
+
+**Decisão.** Migração manual, página a página, em 8 etapas. A cada página, o conteúdo é
+classificado em três baldes: **drift mecânico** (nome já decidido — corrigido em silêncio e
+listado), **lacuna** (informação faltando ou contraditória — pergunta), **conteúdo novo** (algo
+que o GDD nunca decidiu — pergunta). A IA não resolve cânone sozinha.
+
+**Consequência.** Mais caro e mais lento, mas a migração vira revisão editorial em vez de
+transporte. O `scripts/limpar-export-notion.py` permanece no repo como ferramenta auxiliar.
+
+**Nota.** O ADR-009 não estava errado nos fatos — estava errado no critério. Otimizou custo de
+transporte quando o gargalo real era qualidade de conteúdo.
+
+---
+
+## ADR-011 — Stack e invariantes técnicos da PoC
+
+**Data:** 2026-07-21 (decidido) · 2026-08-31 (transcrito de `000-constituicao.md`)
+**Status:** aceita
+
+### Contexto
+
+As escolhas de stack e os princípios de arquitetura viviam em
+`specs/000-constituicao.md`. Spec é efêmera e morre no fim da entrega; decisão
+não. O documento estava no lugar errado desde o começo.
+
+### Decisão
+
+**Stack.** Go + chi na API. SQLite via `modernc.org/sqlite`, sem CGO. sqlc com
+SQL escrito à mão, sem ORM. golang-migrate. Cliente em React + Vite +
+TypeScript com Zustand. Conteúdo de jogo em JSON estático sob `data/`.
+Módulo Go: `escoria`.
+
+**Invariantes.**
+
+1. **Conteúdo é dado, não código.** Armas, mobs, zonas, receitas, nós da
+   Litania e diálogos vivem em JSON, carregados no boot e servidos em memória.
+   Adicionar conteúdo nunca exige recompilar lógica.
+2. **`gamedata` é infraestrutura, não domínio.** O carregador lê, tipa e expõe.
+   Não tem regra de negócio.
+3. **Domínios por substantivo do jogo, em português.** `internal/player/`,
+   `internal/inventory/`, `internal/action/`, `internal/equipment/`,
+   `internal/litania/`.
+4. **O servidor é a autoridade do tempo.** Toda ação tem `started_at` e
+   `duration_ms` no servidor. Cliente adiantando relógio não consegue nada.
+5. **Offline congela.** Nenhuma mecânica avança com o jogador desconectado.
+   Isso decorre da definição de idle do projeto (ADR-002) e é regra de
+   arquitetura, não preferência de design.
+6. **Sem WebSocket na PoC.** Polling do cliente. Simples, suficiente, adiável.
+
+**Convenções de API.** REST sobre JSON, rotas em português seguindo o lore
+(`/litania`, `/viagem`, `/inventario`). Campos em `snake_case`. Erro com status
+adequado e corpo `{ "erro": "codigo_legivel", "mensagem": "..." }`. Toda rota
+que muda estado é `POST`; leitura é `GET`. Sessão mock na PoC
+(`POST /auth/mock`) — autenticação real é pós-PoC e não influencia o desenho
+das outras rotas.
+
+**Convenções de dados.** Migrations numeradas e imutáveis depois de aplicadas
+(`NNN_descricao.up.sql` / `.down.sql`). Chave primária `id` inteiro
+autoincremento salvo razão explícita. Tabela de progresso do jogador começa com
+`player_`. Timestamps em UTC, ISO-8601. IDs de conteúdo são strings estáveis
+definidas no JSON, nunca inteiros de banco.
+
+### Consequência
+
+Uma spec nunca contradiz esta ADR. Mudar qualquer item aqui exige ADR nova que
+substitua esta, não edição.
+
+`docs/estudos/04` e `05` discutem WebSocket e PostgreSQL. São estudos, não
+decisões — esta ADR vence.
+
+### Regras afetadas
+
+nenhuma

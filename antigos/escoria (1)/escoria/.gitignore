@@ -1,0 +1,27 @@
+# Go
+/server/bin/
+*.exe
+*.test
+*.out
+
+# Node
+node_modules/
+/web/dist/
+.vite/
+
+# Banco local
+*.db
+*.db-shm
+*.db-wal
+
+# Obsidian
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Ambiente
+.env
+.env.local

@@ -1,0 +1,11 @@
+titulo	descricao
+Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada
+Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.
+Fatia 2 — Primeira arma (Passo 2)	o jogador recebe uma arma, equipa, e vê o loadout mudar.
+Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.
+Fatia 4 — Coleta (Passo 4)	o jogador coleta recursos em loop e vê o inventário encher.
+Fatia 5 — A Bigorna: viagem e forja (Passo 5)	o jogador viaja até A Bigorna, refina e crafta a primeira ferramenta.
+Fatia 6 — Outro portador (Passo 6)	o jogador cruza com o NPC-Portador; as armas se reconhecem.
+Fatia 7 — Zonas T2 (O Verde Surdo, A Costela)	o jogador viaja para as zonas T2 e coleta e luta em tier 2.
+Fatia 8 — Segunda arma e combate T2 (Passo 7)	o jogador descobre a segunda arma, troca, e sente a Têmpera esfriar.
+Fatia 9 — A Litania e a Saída (Passo 8)	o jogador vê A Litania inteira e atravessa A Encruzilhada.

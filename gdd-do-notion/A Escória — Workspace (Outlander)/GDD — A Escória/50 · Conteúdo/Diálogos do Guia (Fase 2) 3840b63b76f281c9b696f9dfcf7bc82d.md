@@ -1,0 +1,399 @@
+# Diálogos do Guia (Fase 2)
+
+Falas completas dos 8 passos são Fase 2. Falas-âncora já canônicas:
+
+| Passo | Fala |
+| --- | --- |
+| 1 | *"Mais um. Anda. A maré não traz quem ela não pode usar."* |
+| 2 | *"Pega. Pra você não morrer na primeira noite."* |
+| 4 | *"Isso aqui dá o que não existe em lugar nenhum. Não pergunta por quê."* |
+| 5 | *"Guarde essas lascas. Aqui, até chão firme custa."* |
+| 5 | *"Material faz a lâmina; Lastro faz a lâmina continuar sendo lâmina; Fama faz a coisa dentro dela lembrar como se usa uma lâmina."* |
+| 6 (NPC) | *"Sua arma tem gosto. Cuidado quando ela começar a ter voz."* |
+| 8 | *"Lá fora, sabem o que você carrega. E o que você carrega escolhe com quem você se alinha."* |
+
+## Template
+
+```jsx
+id: dialog_passo<N>_<beat>          # ex: dialog_passo3_abertura
+beat: abertura | reacao | bark_espera | fala_npc
+passo: 1..8
+gatilho: ""
+linhas: [ { speaker: guia | portador_npc, texto: "" } ]
+subtexto: ""   # o que o Guia esconde
+```
+
+## Regra de subtexto
+
+O Guia **ajuda mas não avisa por completo** — avisar revelaria o próprio medo do T8. Cada diálogo registra o que ele omite.
+
+## A fazer
+
+- [x]  Falas dos 8 passos (abertura + reação + bark de espera). → `dialogs.json`
+- [x]  Idle barks que mudam conforme o loadout (11 barks: 3 por linha + 2 genéricos). → `dialogs.json`
+- [x]  Variação quando o player troca de arma (Passo 7). → `dialogs.json`
+
+**Entregue em 21/07/2026.** Arquivo canônico abaixo. Convenções: `speaker` distingue `guia` de `portador_npc` (Passo 6); chave temática *"você só assina depois"* recorre nos passos 2, 3 e fecha no 8; termo técnico *têmpera* só aparece na boca do Guia no Passo 7 (regra de vocabulário híbrida).
+
+## Diálogos completos — dialogs.json (canônico)
+
+Destino no código: `data/tutorial/dialogs.json`. 22 blocos de diálogo (8 passos) + 11 idle barks. Arquivo `.json` anexado ao final desta página.
+
+```json
+{
+  "meta": {
+    "arquivo": "data/tutorial/dialogs.json",
+    "descricao": "Diálogos do tutorial da PoC (A Margem Calada). Guia + NPC-Portador (Passo 6) + idle barks por loadout.",
+    "passos": 8,
+    "speakers": ["guia", "portador_npc"],
+    "chave_tematica": "você só assina depois",
+    "regra_vocabulario": "Guia usa metáforas de forja quase sempre; termo técnico 'têmpera' aparece só no Passo 7 (reação).",
+    "regra_subtexto": "campo 'subtexto' é nota de direção interna (não exibida ao player): registra o que o Guia omite."
+  },
+  "dialogos": [
+    {
+      "id": "dialog_passo1_abertura",
+      "passo": 1,
+      "beat": "abertura",
+      "gatilho": "player_desembarca_primeira_vez",
+      "linhas": [
+        { "speaker": "guia", "texto": "Mais um. Anda. A maré não traz quem ela não pode usar." }
+      ],
+      "subtexto": "Fala-âncora canônica. Ele não se surpreende porque recebe recém-chegados há tempo demais. 'Que ela não pode usar' é confissão disfarçada de saudação: a Escória usa as pessoas, e ele sabe porque foi usado. Não explica."
+    },
+    {
+      "id": "dialog_passo1_reacao",
+      "passo": 1,
+      "beat": "reacao",
+      "gatilho": "player_conclui_primeira_navegacao",
+      "linhas": [
+        { "speaker": "guia", "texto": "Achou o caminho. Todo mundo acha. É o resto que é difícil." }
+      ],
+      "subtexto": "Ele deixa o player se sentir capaz de propósito — chegar é fácil, sair inteiro é que não. Não avisa do custo porque avisar seria admitir o próprio medo de nunca ter saído."
+    },
+    {
+      "id": "dialog_passo2_abertura",
+      "passo": 2,
+      "beat": "abertura",
+      "gatilho": "player_recebe_primeira_arma",
+      "linhas": [
+        { "speaker": "guia", "texto": "Pega. Pra você não morrer na primeira noite." },
+        { "speaker": "guia", "texto": "Não é prêmio. É ferramenta. Trata ela como sucata que ainda serve." }
+      ],
+      "subtexto": "Primeira linha é canônica. Ele chama de ferramenta pra baixar o peso do momento — porque sabe que não é ferramenta, é começo de pacto. Chamar de sucata é o jeito dele fingir que ainda controla o que carrega."
+    },
+    {
+      "id": "dialog_passo2_reacao",
+      "passo": 2,
+      "beat": "reacao",
+      "gatilho": "player_equipa_primeira_arma",
+      "linhas": [
+        { "speaker": "guia", "texto": "Sentiu? Ela assenta na mão como se já soubesse a tua." },
+        { "speaker": "guia", "texto": "Ainda é ruído. Um dia vira gosto. Você só assina depois." }
+      ],
+      "subtexto": "Repete a chave temática. 'Ainda é ruído' é vocabulário de tier T1-T3 sem citar tier — ruído divino difuso antes da cristalização. Ele sabe onde isso termina e escolhe não terminar a frase."
+    },
+    {
+      "id": "dialog_passo2_espera",
+      "passo": 2,
+      "beat": "bark_espera",
+      "gatilho": "player_inativo_com_arma_recem_recebida",
+      "linhas": [
+        { "speaker": "guia", "texto": "Não morde. Ainda. Bota na mão que é pra isso." }
+      ],
+      "subtexto": "O 'ainda' é a piada seca dele — mas é verdade literal. Não força o player; só cutuca."
+    },
+    {
+      "id": "dialog_passo3_abertura",
+      "passo": 3,
+      "beat": "abertura",
+      "gatilho": "player_inicia_primeiro_combate",
+      "linhas": [
+        { "speaker": "guia", "texto": "Vai. Deixa o braço fazer o que ele lembra — você só assina depois." }
+      ],
+      "subtexto": "Sabe que o primeiro combate vai assustar. Já passou por isso. Escolhe palavras que insinuam autoria compartilhada sem explicar — porque explicar seria admitir que ele mesmo nunca conseguiu deixar de assinar."
+    },
+    {
+      "id": "dialog_passo3_reacao",
+      "passo": 3,
+      "beat": "reacao",
+      "gatilho": "primeiro_combate_concluido",
+      "linhas": [
+        { "speaker": "guia", "texto": "Engraçado, né. A lasca lembra antes de você." },
+        { "speaker": "guia", "texto": "Acostuma. Daqui a pouco vai parecer que foi você." }
+      ],
+      "subtexto": "Ele lembra exatamente do dia em que parou de estranhar. Sabe que esse esquecimento é o início da cessão — Pilar 2 em forma de conselho amável. Não vai contar."
+    },
+    {
+      "id": "dialog_passo3_espera",
+      "passo": 3,
+      "beat": "bark_espera",
+      "gatilho": "player_inativo_apos_abertura",
+      "linhas": [
+        { "speaker": "guia", "texto": "Quanto mais você olha, mais a lasca pensa que é decoração." }
+      ],
+      "subtexto": "Já viu novatos travarem na primeira. Não força. A Escória cobra cedo de qualquer jeito."
+    },
+    {
+      "id": "dialog_passo4_abertura",
+      "passo": 4,
+      "beat": "abertura",
+      "gatilho": "player_entra_zona_coleta",
+      "linhas": [
+        { "speaker": "guia", "texto": "Isso aqui dá o que não existe em lugar nenhum. Não pergunta por quê." }
+      ],
+      "subtexto": "Fala-âncora canônica. 'Não pergunta por quê' é ele te ensinando a não puxar o fio que ele mesmo tem medo de puxar. A generosidade da Escória tem conta — ele já viu a fatura."
+    },
+    {
+      "id": "dialog_passo4_reacao",
+      "passo": 4,
+      "beat": "reacao",
+      "gatilho": "player_coleta_primeiro_material",
+      "linhas": [
+        { "speaker": "guia", "texto": "Guarda tudo. Aqui até chão firme custa." },
+        { "speaker": "guia", "texto": "O que parece lixo hoje é o que segura a lâmina amanhã." }
+      ],
+      "subtexto": "Segunda linha ecoa a fala-âncora do Passo 5 ('até chão firme custa'). Ele valoriza sucata porque foi sucateiro — e porque aprendeu que na Escória nada é de graça, nem o chão."
+    },
+    {
+      "id": "dialog_passo4_espera",
+      "passo": 4,
+      "beat": "bark_espera",
+      "gatilho": "player_inativo_em_zona_coleta",
+      "linhas": [
+        { "speaker": "guia", "texto": "A zona não espera. O que você não pega, ela reengole." }
+      ],
+      "subtexto": "Meio verdade, meio empurrão. A Escória de fato reabsorve — mas ele exagera pra manter o novato em movimento. Presença é o que ele quer ensinar sem nomear."
+    },
+    {
+      "id": "dialog_passo5_abertura",
+      "passo": 5,
+      "beat": "abertura",
+      "gatilho": "player_acessa_forja_primeira_vez",
+      "linhas": [
+        { "speaker": "guia", "texto": "Guarde essas lascas. Aqui, até chão firme custa." },
+        { "speaker": "guia", "texto": "Material faz a lâmina; Lastro faz a lâmina continuar sendo lâmina; Fama faz a coisa dentro dela lembrar como se usa uma lâmina." }
+      ],
+      "subtexto": "Duas falas-âncora canônicas do Passo 5. A segunda define as três moedas sem UI-speak. 'A coisa dentro dela' é o deus latente (ruído difuso em T1-T3) — ele nomeia o deus sem dizer 'deus'. A Fama aqui é a Fama da Arma (Leitura X): a recitação daquele deus específico."
+    },
+    {
+      "id": "dialog_passo5_reacao",
+      "passo": 5,
+      "beat": "reacao",
+      "gatilho": "player_conclui_primeira_forja",
+      "linhas": [
+        { "speaker": "guia", "texto": "Viu como ela esquentou? Não foi o fogo. Foi você, batendo na mesma coisa sem desviar." },
+        { "speaker": "guia", "texto": "Quanto mais você fica na mesma, mais quente ela fica, mais ela rende. Larga ela, esfria. Começa do frio de novo." }
+      ],
+      "subtexto": "Aqui a Têmpera é apresentada (Leitura Y) sem reescrever a fala-âncora: 'esquentar' = Têmpera subindo com uso ativo da mesma arma; 'larga, esfria, começa do frio' = reset ao trocar. Ele ensina a mecânica que ele mesmo usa pra fugir da cristalização — presente-ativo é recompensado, e ele sabe por quê."
+    },
+    {
+      "id": "dialog_passo5_espera",
+      "passo": 5,
+      "beat": "bark_espera",
+      "gatilho": "player_inativo_na_forja",
+      "linhas": [
+        { "speaker": "guia", "texto": "Fogo aceso e ninguém batendo. Isso aí é Lastro virando fumaça." }
+      ],
+      "subtexto": "Reforça que parar custa — na forja, ficar parado é desperdício visível. Coerente com a filosofia de recompensar presença: até o idle bark empurra pra ação."
+    },
+    {
+      "id": "dialog_passo6_abertura",
+      "passo": 6,
+      "beat": "abertura",
+      "gatilho": "npc_portador_se_aproxima",
+      "linhas": [
+        { "speaker": "guia", "texto": "Olha. Outro. Fica quieto e presta atenção no que a tua arma faz." }
+      ],
+      "subtexto": "O Guia recua pra observar — é isso que ele faz, cataloga. Ele dirige a atenção do player pro objeto, não pra pessoa, porque sabe que o reconhecimento é entre as armas. Está estudando que tipo de portador o Catador é."
+    },
+    {
+      "id": "dialog_passo6_npc",
+      "passo": 6,
+      "beat": "fala_npc",
+      "gatilho": "armas_se_reconhecem",
+      "linhas": [
+        { "speaker": "portador_npc", "texto": "A tua acordou faz pouco. Dá pra sentir daqui." },
+        { "speaker": "portador_npc", "texto": "Sua arma tem gosto. Cuidado quando ela começar a ter voz." }
+      ],
+      "subtexto": "Segunda linha é a fala-âncora canônica. Tom mais seco que o Guia — não ensina, constata e vai embora. Planta o Gancho 3 (a voz que cresce com o tier). 'Ter voz' = cristalização vindoura, dita por alguém que já está mais fundo nesse caminho. Escrito pra parecer outro jogador."
+    },
+    {
+      "id": "dialog_passo6_reacao",
+      "passo": 6,
+      "beat": "reacao",
+      "gatilho": "npc_portador_se_afasta",
+      "linhas": [
+        { "speaker": "guia", "texto": "Foi. Some antes de te devolver a pergunta." },
+        { "speaker": "guia", "texto": "Cada arma reconhece a outra. Gente é que finge que não." }
+      ],
+      "subtexto": "O Guia comenta a partida do NPC com uma verdade que também é sobre ele: some antes de te devolver a pergunta é exatamente o que ele faz o tempo todo. 'Gente finge que não' — ele é o maior fingidor da ilha."
+    },
+    {
+      "id": "dialog_passo7_abertura",
+      "passo": 7,
+      "beat": "abertura",
+      "gatilho": "player_descobre_segunda_arma",
+      "linhas": [
+        { "speaker": "guia", "texto": "Tem outra ali. Já tinha. Você que não tinha visto." },
+        { "speaker": "guia", "texto": "Pega. Sente o peso. Decide depois." }
+      ],
+      "subtexto": "Sabe que o player vai querer trocar. Quer ver. Cataloga mentalmente que tipo de portador é esse — dos que enraízam ou dos que rodam (como ele)."
+    },
+    {
+      "id": "dialog_passo7_reacao",
+      "passo": 7,
+      "beat": "reacao",
+      "gatilho": "player_troca_arma_equipada_primeira_vez",
+      "linhas": [
+        { "speaker": "guia", "texto": "Boa. Sucateiro vivo não deixa a forja queimar muito tempo no mesmo metal." },
+        { "speaker": "guia", "texto": "Esquenta uma, larga ela quente, esquenta outra. Quem deixa a têmpera maturar até o fim, acorda chamando a arma pelo nome próprio — e aí já era." }
+      ],
+      "subtexto": "Está descrevendo a estratégia da própria vida e fingindo que é conselho. Nunca deixou nenhuma têmpera maturar até o fim. Foge da cristalização há anos. Aprovar o player é aprovar a si mesmo. Único momento da PoC em que ele usa 'têmpera' literal — gíria escapa quando o peso bate."
+    },
+    {
+      "id": "dialog_passo7_espera",
+      "passo": 7,
+      "beat": "bark_espera",
+      "gatilho": "player_tem_segunda_arma_no_inventario_sem_trocar",
+      "linhas": [
+        { "speaker": "guia", "texto": "Tá ali parada. Tem peso, mas só sente quando carrega." }
+      ],
+      "subtexto": "Está testando — não-decidir também é decisão. Quer ver se o novato se compromete cedo (e ferra) ou se roda (como ele). Não força."
+    },
+    {
+      "id": "dialog_passo8_abertura",
+      "passo": 8,
+      "beat": "abertura",
+      "gatilho": "player_alcanca_saida_ilha",
+      "linhas": [
+        { "speaker": "guia", "texto": "Lá fora, sabem o que você carrega. E o que você carrega escolhe com quem você se alinha." }
+      ],
+      "subtexto": "Fala-âncora canônica de despedida. Resume o Pilar 1 (você é o que veste) e insinua o Pilar 2. Ele te manda embora sabendo o que te espera e não diz — porque nunca teve coragem de ir ele mesmo."
+    },
+    {
+      "id": "dialog_passo8_reacao",
+      "passo": 8,
+      "beat": "reacao",
+      "gatilho": "player_cruza_encruzilhada_saida",
+      "linhas": [
+        { "speaker": "guia", "texto": "Some. E não agradece — quem agradece a Escória fica devendo." },
+        { "speaker": "guia", "texto": "Você assinou hoje sem ler. Todo mundo assina. Boa sorte lendo o resto." }
+      ],
+      "subtexto": "Fechamento da chave temática 'você só assina depois' — agora no passado: você assinou. É o mais perto de um aviso honesto que ele chega, e ainda assim vem embrulhado em ironia seca. Ele fica. O player vai. Essa é a inveja e o alívio dele, juntos."
+    }
+  ],
+  "idle_barks": [
+    {
+      "id": "idle_guerreiro_01",
+      "tipo": "idle_bark",
+      "linha_arma": "guerreiro",
+      "condicao": "arma_linha_guerreiro_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Essa aí gosta de ficar de frente. Parado, ela só fica pesada." }
+      ],
+      "subtexto": "Ruído de domínio da linha Guerreiro (corte/frontline) sem nome mitológico. Insinua o 'gosto' da arma."
+    },
+    {
+      "id": "idle_guerreiro_02",
+      "tipo": "idle_bark",
+      "linha_arma": "guerreiro",
+      "condicao": "arma_linha_guerreiro_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Peso na mão pede uso. Metal parado esfria, e frio ela não rende." }
+      ],
+      "subtexto": "Reforça a mecânica de Têmpera (esfriar) via metáfora, e empurra pra presença ativa."
+    },
+    {
+      "id": "idle_guerreiro_03",
+      "tipo": "idle_bark",
+      "linha_arma": "guerreiro",
+      "condicao": "arma_linha_guerreiro_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Ela não recua sozinha. Mas também não avança sozinha. Ainda." }
+      ],
+      "subtexto": "O 'ainda' insinua a voz crescente do deus (Gancho 3) sem citar tier. Ruído difuso T1-T3."
+    },
+    {
+      "id": "idle_cacador_01",
+      "tipo": "idle_bark",
+      "linha_arma": "cacador",
+      "condicao": "arma_linha_cacador_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Essa quer distância e pressa. Parado, você desperdiça as duas." }
+      ],
+      "subtexto": "Ruído de domínio da linha Caçador (distância/rápido). Insinua temperamento da arma."
+    },
+    {
+      "id": "idle_cacador_02",
+      "tipo": "idle_bark",
+      "linha_arma": "cacador",
+      "condicao": "arma_linha_cacador_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Ela mira antes de você. Se você não anda, ela cansa de esperar." }
+      ],
+      "subtexto": "Ecoa 'a lasca lembra antes de você' (Passo 3) — autoria compartilhada. Empurra presença."
+    },
+    {
+      "id": "idle_cacador_03",
+      "tipo": "idle_bark",
+      "linha_arma": "cacador",
+      "condicao": "arma_linha_cacador_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Rápida assim, esfria rápido também. Fica quente quem não para." }
+      ],
+      "subtexto": "Têmpera via metáfora, ajustada ao caráter veloz da linha: recompensa presença contínua."
+    },
+    {
+      "id": "idle_conjurador_01",
+      "tipo": "idle_bark",
+      "linha_arma": "conjurador",
+      "condicao": "arma_linha_conjurador_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Essa é lenta e teimosa. Cobra paciência — mas paciência parada é só demora." }
+      ],
+      "subtexto": "Ruído de domínio da linha Conjurador (controle/lento). Distingue o tempo dela das outras."
+    },
+    {
+      "id": "idle_conjurador_02",
+      "tipo": "idle_bark",
+      "linha_arma": "conjurador",
+      "condicao": "arma_linha_conjurador_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Ela pensa junto contigo. Para de pensar, e ela pensa por você — cuidado com isso." }
+      ],
+      "subtexto": "A mais explícita sobre cessão de autoria (Pilar 2). 'Pensa por você' insinua a voz do deus. Coerente com a lentidão-controle da linha."
+    },
+    {
+      "id": "idle_conjurador_03",
+      "tipo": "idle_bark",
+      "linha_arma": "conjurador",
+      "condicao": "arma_linha_conjurador_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Fogo brando também tempera. Mas só se alguém ficar atiçando." }
+      ],
+      "subtexto": "Têmpera via metáfora de brasa lenta, adequada ao ritmo da linha. Reforça presença ativa."
+    },
+    {
+      "id": "idle_generico_01",
+      "tipo": "idle_bark",
+      "linha_arma": null,
+      "condicao": "nenhuma_arma_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Mão vazia na Escória é convite. Pega alguma coisa antes que alguma coisa te pegue." }
+      ],
+      "subtexto": "Estado sem arma equipada (raro no tutorial mas possível). Tom de aviso seco; a Escória não é neutra com quem chega desarmado."
+    },
+    {
+      "id": "idle_generico_02",
+      "tipo": "idle_bark",
+      "linha_arma": null,
+      "condicao": "nenhuma_arma_equipada + player_idle",
+      "linhas": [
+        { "speaker": "guia", "texto": "Sem nada na mão, você é só mais um caco na maré. Escolhe um peso." }
+      ],
+      "subtexto": "Reforça Pilar 1 (você é o que veste) pela ausência: sem loadout, sem identidade. 'Caco na maré' ecoa a fala-âncora do Passo 1."
+    }
+  ]
+}
+```

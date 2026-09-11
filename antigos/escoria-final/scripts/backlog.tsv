@@ -1,0 +1,72 @@
+fatia	milestone	entrega	camada	titulo
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	backend	Inicializar o projeto Go e a estrutura de pastas
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	backend	Configurar acesso a dados, banco e migrations
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	backend	Carregar o conteúdo JSON no boot e expor tipado em memória
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	backend	Verificação de saúde: confirma que o servidor subiu e o conteúdo carregou
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	frontend	Inicializar o projeto do cliente
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`zones.json` — A Ressaca, A Bigorna, O Verde Surdo, A Costela, A Encruzilhada
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`resources/nodes.json` — nós de recurso por zona
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`mobs/ressaca.json`, `mobs/verde-surdo.json`, `mobs/costela.json`
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`weapons.json` e `tools.json` (T1–T2)
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`armor.json` (T1–T2)
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`crafting/recipes.json` (T1 e T2)
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`skills/abilities.json` — habilidades por arma e ataque automático
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`progression/litania.json` — Linha do Catador, Guerreiro, Caçador, Conjurador, Coleta, Forja
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`progression/fame_per_action.json` e `tutorial/steps.json`
+0	Fatia 0 — Fundação	servidor sobe, carrega o conteúdo, responde a uma verificação de saúde. Nada	dados	`tutorial/dialogs.json` — **PRONTO** (entregue 21/07/2026)
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	backend	Persistir o jogador: quem é, onde está, em que passo do tutorial
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	backend	Criar jogador e abrir sessão
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	backend	Devolver o estado do jogador — a rota de reidratação
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	backend	Devolver os dados de uma zona, incluindo as ações disponíveis
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	frontend	Store do jogador: estado mínimo e reidratação no boot
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	frontend	Tela de criação de personagem
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	frontend	Ligar a criação à tela de zona
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	frontend	Tela de zona: nome e lista de ações vinda do servidor
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	frontend	Reidratação: recarregar mantém o jogador na zona correta
+1	Fatia 1 — Personagem (Passo 1: Chegada)	o jogador cria um personagem e vê A Ressaca pela primeira vez.	narrativa	Exibir a fala de chegada do Guia, sem repetir ao recarregar
+2	Fatia 2 — Primeira arma (Passo 2)	o jogador recebe uma arma, equipa, e vê o loadout mudar.	backend	Persistir o equipamento do jogador
+2	Fatia 2 — Primeira arma (Passo 2)	o jogador recebe uma arma, equipa, e vê o loadout mudar.	backend	Equipar um item, limpando as habilidades da peça trocada
+2	Fatia 2 — Primeira arma (Passo 2)	o jogador recebe uma arma, equipa, e vê o loadout mudar.	frontend	Tela de loadout: slots de equipamento e escolha de item por slot
+2	Fatia 2 — Primeira arma (Passo 2)	o jogador recebe uma arma, equipa, e vê o loadout mudar.	narrativa	Exibir os diálogos do Passo 2 — chegada, reação e espera
+3	Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.	backend	Combate T1: ciclo fixo com loot e Fama, sem fila de habilidades ainda
+3	Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.	backend	Iniciar uma ação — o servidor é a autoridade do tempo
+3	Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.	backend	Consultar a ação em andamento e receber o resultado quando o ciclo fecha
+3	Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.	backend	Cancelar uma ação em andamento
+3	Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.	backend	Creditar Fama: Linha do Catador sempre, mais o nó específico da ação
+3	Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.	frontend	Componente de ação em andamento, com progresso e tempo restante
+3	Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.	frontend	Ciclo de consulta automática: ao fechar um ciclo, reinicia sozinho
+3	Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.	frontend	Mostrar a Fama ganha a cada ciclo e em qual nó ela caiu
+3	Fatia 3 — Primeiro combate (Passo 3)	o jogador mata o primeiro Mito sem Pacto e ganha Fama.	narrativa	Exibir os diálogos do Passo 3
+4	Fatia 4 — Coleta (Passo 4)	o jogador coleta recursos em loop e vê o inventário encher.	backend	Persistir o inventário do jogador
+4	Fatia 4 — Coleta (Passo 4)	o jogador coleta recursos em loop e vê o inventário encher.	backend	Coleta: ciclo fixo que entrega recurso e Fama, e reinicia
+4	Fatia 4 — Coleta (Passo 4)	o jogador coleta recursos em loop e vê o inventário encher.	backend	Consultar o inventário com quantidades e peso
+4	Fatia 4 — Coleta (Passo 4)	o jogador coleta recursos em loop e vê o inventário encher.	backend	Validar slots e peso a cada ciclo
+4	Fatia 4 — Coleta (Passo 4)	o jogador coleta recursos em loop e vê o inventário encher.	frontend	Painel de inventário: slots, peso e itens
+4	Fatia 4 — Coleta (Passo 4)	o jogador coleta recursos em loop e vê o inventário encher.	narrativa	Exibir os diálogos do Passo 4
+5	Fatia 5 — A Bigorna: viagem e forja (Passo 5)	o jogador viaja até A Bigorna, refina e crafta a primeira ferramenta.	backend	Viajar entre zonas, com tempo de trânsito
+5	Fatia 5 — A Bigorna: viagem e forja (Passo 5)	o jogador viaja até A Bigorna, refina e crafta a primeira ferramenta.	backend	Refinar recursos nas estações de refino
+5	Fatia 5 — A Bigorna: viagem e forja (Passo 5)	o jogador viaja até A Bigorna, refina e crafta a primeira ferramenta.	backend	Craftar: validar a estação, consumir recursos, gerar o item e creditar Fama
+5	Fatia 5 — A Bigorna: viagem e forja (Passo 5)	o jogador viaja até A Bigorna, refina e crafta a primeira ferramenta.	frontend	Integrar a viagem: tempo de trânsito e troca de zona ao chegar
+5	Fatia 5 — A Bigorna: viagem e forja (Passo 5)	o jogador viaja até A Bigorna, refina e crafta a primeira ferramenta.	frontend	Tela de forja: receitas disponíveis na estação atual
+5	Fatia 5 — A Bigorna: viagem e forja (Passo 5)	o jogador viaja até A Bigorna, refina e crafta a primeira ferramenta.	frontend	Retorno visível do craft: o que foi consumido e o que saiu
+5	Fatia 5 — A Bigorna: viagem e forja (Passo 5)	o jogador viaja até A Bigorna, refina e crafta a primeira ferramenta.	narrativa	Exibir os diálogos do Passo 5, incluindo a apresentação da Têmpera
+6	Fatia 6 — Outro portador (Passo 6)	o jogador cruza com o NPC-Portador; as armas se reconhecem.	backend	Verificar e avançar os passos do tutorial
+6	Fatia 6 — Outro portador (Passo 6)	o jogador cruza com o NPC-Portador; as armas se reconhecem.	backend	Disparar o encontro com o NPC-Portador quando as condições baterem
+6	Fatia 6 — Outro portador (Passo 6)	o jogador cruza com o NPC-Portador; as armas se reconhecem.	frontend	Indicador de progresso do tutorial: passo atual e o que falta
+6	Fatia 6 — Outro portador (Passo 6)	o jogador cruza com o NPC-Portador; as armas se reconhecem.	narrativa	Exibir a fala do NPC-Portador e a reação do Guia
+7	Fatia 7 — Zonas T2 (O Verde Surdo, A Costela)	o jogador viaja para as zonas T2 e coleta e luta em tier 2.	backend	Creditar Fama de coleta T2 no nó certo (`PH_NODE_COLETA_MADEIRA`, `_MINERIO`, `_COURO`)
+7	Fatia 7 — Zonas T2 (O Verde Surdo, A Costela)	o jogador viaja para as zonas T2 e coleta e luta em tier 2.	dados	Recursos e mobs de O Verde Surdo e A Costela em `zones.json`
+8	Fatia 8 — Segunda arma e combate T2 (Passo 7)	o jogador descobre a segunda arma, troca, e sente a Têmpera esfriar.	backend	Combate T2: fila de habilidades com cooldowns individuais
+8	Fatia 8 — Segunda arma e combate T2 (Passo 7)	o jogador descobre a segunda arma, troca, e sente a Têmpera esfriar.	backend	Salvar a ordem da fila de habilidades
+8	Fatia 8 — Segunda arma e combate T2 (Passo 7)	o jogador descobre a segunda arma, troca, e sente a Têmpera esfriar.	backend	Identificar a peça que mais contribuiu com dano e creditar a Fama no nó dela
+8	Fatia 8 — Segunda arma e combate T2 (Passo 7)	o jogador descobre a segunda arma, troca, e sente a Têmpera esfriar.	backend	Têmpera: multiplicador por arma equipada — sobe com uso ativo, congela offline, reseta na troca
+8	Fatia 8 — Segunda arma e combate T2 (Passo 7)	o jogador descobre a segunda arma, troca, e sente a Têmpera esfriar.	frontend	Tela de fila de habilidades: ver e reordenar
+8	Fatia 8 — Segunda arma e combate T2 (Passo 7)	o jogador descobre a segunda arma, troca, e sente a Têmpera esfriar.	frontend	Indicador de Têmpera, em metáfora de calor e sem jargão de sistema
+8	Fatia 8 — Segunda arma e combate T2 (Passo 7)	o jogador descobre a segunda arma, troca, e sente a Têmpera esfriar.	narrativa	"Exibir os diálogos do Passo 7 — único momento em que o Guia diz ""têmpera"""
+9	Fatia 9 — A Litania e a Saída (Passo 8)	o jogador vê A Litania inteira e atravessa A Encruzilhada.	backend	Persistir o progresso do jogador na Litania
+9	Fatia 9 — A Litania e a Saída (Passo 8)	o jogador vê A Litania inteira e atravessa A Encruzilhada.	backend	Consultar A Litania: a árvore e o progresso do jogador
+9	Fatia 9 — A Litania e a Saída (Passo 8)	o jogador vê A Litania inteira e atravessa A Encruzilhada.	backend	Marcar o tutorial como concluído e liberar a saída da ilha
+9	Fatia 9 — A Litania e a Saída (Passo 8)	o jogador vê A Litania inteira e atravessa A Encruzilhada.	frontend	Tela da Litania: nós, progresso e desbloqueios
+9	Fatia 9 — A Litania e a Saída (Passo 8)	o jogador vê A Litania inteira e atravessa A Encruzilhada.	frontend	Tela de escolha do destino de saída (ver questão aberta 1)
+9	Fatia 9 — A Litania e a Saída (Passo 8)	o jogador vê A Litania inteira e atravessa A Encruzilhada.	frontend	Tela de conclusão do tutorial
+9	Fatia 9 — A Litania e a Saída (Passo 8)	o jogador vê A Litania inteira e atravessa A Encruzilhada.	narrativa	Exibir os diálogos do Passo 8 e o fechamento da chave temática

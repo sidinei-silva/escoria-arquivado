@@ -1,0 +1,59 @@
+﻿Tarefa,Camada,Fase,Notas,Status
+Criar GameDataLoader: carregar todos os JSONs no boot e expor structs tipadas em memória,Backend,Fase 0 — Setup,"Criar internal/gamedata/loader.go (os.ReadFile + json.Unmarshal para cada arquivo de /data/), internal/gamedata/types.go (structs Zone, Item, Mob, Recipe, Ability, LitaniaNode), internal/gamedata/store.go (GetZone, GetItem, GetRecipe, GetAbilities, etc). Chamar gamedata.Load() no main.go antes de iniciar o servidor. Não é domínio DDD — é infraestrutura de conteúdo.",Backlog
+Criar crafting/recipes.json (receitas T1 e T2),Dados,Fase 0 — Setup,Incluir receitas de refinamento e de crafting por estação.,Backlog
+Criar armor.json (T1-T2 do tutorial),Dados,Fase 0 — Setup,,Backlog
+Inicializar projeto Go: criar estrutura de pastas (Standard Layout) + instalar dependências,Backend,Fase 0 — Setup,"go mod init escoria. Criar estrutura: cmd/api/main.go, internal/gamedata/, internal/player/, internal/inventory/, internal/action/, internal/equipment/, internal/litania/, internal/db/ (gerado pelo sqlc), data/, migrations/. Instalar dependências: go get http://github.com/go-chi/chi/v5 http://modernc.org/sqlite http://github.com/golang-migrate/migrate/v4 http://github.com/sqlc-dev/sqlc.",Backlog
+Criar skills/abilities.json (habilidades por arma — slots Q/W/E + auto-attack),Dados,Fase 0 — Setup,,Backlog
+Configurar sqlc + SQLite (http://modernc.org/sqlite) + golang-migrate,Backend,Fase 0 — Setup,Criar sqlc.yaml apontando queries para cada internal/*/query.sql e output para internal/db/. Configurar golang-migrate com pasta migrations/. O código em internal/db/ é gerado — nunca editar manualmente. Rodar sqlc generate após cada query.sql novo.,Backlog
+"Criar zones.json (O Farol, A Cova, Floresta Esquecida, Forte da Montanha)",Dados,Fase 0 — Setup,Incluir available_actions por zona com duration_ms e fame_per_action.,Backlog
+Criar weapons.json e tools.json (T1-T2 do tutorial),Dados,Fase 0 — Setup,"Definir em JSON as armas T1-T2 das 3 linhas (Guerreiro / Caçador / Conjurador) e as ferramentas de coleta T1-T2 do tutorial. Nomes, descrições e valores vêm dos chats de conteúdo (GDD ▸ 50 · Conteúdo). Conteúdo 100% original — sem fonte externa.",Backlog
+"Criar progression/litania.json (linhas do tutorial: Catador, Guerreiro, Caçador, Conjurador, Coleta, Forja)",Dados,Fase 0 — Setup,"Estrutura genérica: id, fame_required, parent_node, branch, tier. Só os nós T1-T3 do tutorial.",Backlog
+Criar mobs/forest.json e mobs/mountain.json,Dados,Fase 0 — Setup,"Definir em JSON os Mitos sem Pacto das zonas T1-T2. Fichas completas (nome, tradição, postura vs. Incrédulo, função de combate, drops) vêm dos chats de conteúdo (GDD ▸ 50 · Conteúdo ▸ Mobs). Conteúdo 100% original — sem fonte externa.",Backlog
+"GET /player/state (retorna zona atual, inventário, peso, ação em andamento)",Backend,Fase 1 — Personagem,,Backlog
+POST /auth/mock (cria sessão com nome + user_id),Backend,Fase 1 — Personagem,"Mock: aceitar nome no body, gerar user_id, retornar token simples. user_id via header nas demais rotas.",Backlog
+"Zustand playerStore (state inicial: player_id, zone, inventário, ação atual)",Frontend,Fase 1 — Personagem,,Backlog
+Tela: Criar Personagem (campo nome + botão confirmar),Frontend,Fase 1 — Personagem,,Backlog
+Integrar tela com POST /auth/mock → redirecionar para tela de zona O Farol,Frontend,Fase 1 — Personagem,,Backlog
+"Migration SQL player_state + queries sqlc (CreatePlayer, GetPlayer, UpdateZone...)",Backend,Fase 1 — Personagem,"Criar migrations/001_create_player_state.up.sql. Escrever internal/player/query.sql com: CreatePlayer, GetPlayerByID, UpdatePlayerZone, UpdateCurrentAction, SetTutorialCompleted. Rodar sqlc generate → código vai para internal/db/. Handler em internal/player/handler.go, lógica em internal/player/service.go.",Backlog
+Inicializar projeto React + Vite + TypeScript + Zustand,Frontend,Fase 0 — Setup,,Backlog
+Criar progression/fame_per_action.json e tutorial/steps.json,Dados,Fase 0 — Setup,Definir em JSON a tabela de fama por ação/tier e a estrutura dos 8 passos do tutorial. Baseline numérico de partida em GDD ▸ Especificação da PoC (a re-tunar no balanceamento). Estrutura narrativa dos passos em GDD ▸ Narrativa Jogada — PoC. Conteúdo 100% original — sem fonte externa.,Backlog
+Endpoint GET /health (confirma boot e carga dos JSONs),Backend,Fase 0 — Setup,Verificar que todos os JSONs foram carregados sem erro.,Backlog
+GET /zones/:id (retorna ações disponíveis da zona),Backend,Fase 2 — O Farol,Retornar lista de available_actions do zones.json filtrada pela zona atual do player.,Backlog
+Tela de Zona: nome + lista de ações disponíveis,Frontend,Fase 2 — O Farol,"Nome da zona + lista de botões de ação (apenas as da zona atual, carregadas do GET /zones/:id).",Backlog
+POST /actions/start (inicia ação com started_at + duration_ms),Backend,Fase 2 — O Farol,Salvar started_at e duration_ms. Servidor é autoritátivo — nunca aceita resultado do cliente.,Backlog
+Validação de slots e peso a cada ciclo de coleta,Backend,Fase 2 — O Farol,Retornar status inventory_full quando limite atingido. Parar coleta no fim do ciclo atual.,Backlog
+GET /actions/current (retorna resultado do ciclo se concluído),Backend,Fase 2 — O Farol,"Verificar: now >= started_at + duration_ms. Se sim, processar resultado e retornar.",Backlog
+Lógica de crédito de fama: nó Adventurer + nó específico por tipo de ação,Backend,Fase 2 — O Farol,Regra 1: sempre creditar no nó Adventurer. Regra 3: creditar no nó do recurso coletado.,Backlog
+"Lógica de combate T1: ciclo fixo, loot, fama (sem skill queue ainda)",Backend,Fase 2 — O Farol,,Backlog
+"POST /travel (inicia viagem, atualiza current_zone_id após timer)",Backend,Fase 2 — O Farol,Timer de deslocamento fixo por distância. Atualizar current_zone_id ao término.,Backlog
+Migration SQL player_inventory + queries sqlc,Backend,Fase 2 — O Farol,"Criar migrations/002_create_player_inventory.up.sql. Escrever internal/inventory/query.sql: GetInventory, AddItem, UpdateQuantity, RemoveItem, GetTotalWeight. Handler em internal/inventory/handler.go, lógica em internal/inventory/service.go.",Backlog
+"Lógica de coleta: ciclo fixo, entrega recurso + fama, reinicia em loop",Backend,Fase 2 — O Farol,"Loop contínuo: ao terminar ciclo, reiniciar automaticamente até inventário cheio ou cancel.",Backlog
+POST /actions/cancel (cancela ação em andamento),Backend,Fase 2 — O Farol,,Backlog
+"POST /actions/craft (valida estação, consome recursos, gera item, credita fama)",Backend,Fase 3 — A Cova Hub,"Validar: player está na zona correta, tem os recursos necessários, a estação existe na zona.",Backlog
+Sub-tela: Crafting (lista de receitas disponíveis por estação),Frontend,Fase 3 — A Cova Hub,Listar receitas filtradas pelo que o player tem no inventário. Botão craftar por receita.,Backlog
+Componente: Ação em andamento (barra de progresso + timer),Frontend,Fase 2 — O Farol,Timer regressivo visual + barra de progresso. Exibir enquanto GET /actions/current está pendente.,Backlog
+Polling cycle: setTimeout → GET /actions/current → loop automático,Frontend,Fase 2 — O Farol,Fluxo: POST /actions/start → setTimeout(duration_ms) → GET /actions/current → loop.,Backlog
+Garantir zones.json com recursos e mobs corretos para Floresta e Montanha (T2),Dados,Fase 4 — Zonas T2,Não requer novas telas. Reusa tela de zona com ações diferentes.,Backlog
+Feedback de crafting: itens consumidos + item gerado,Frontend,Fase 3 — A Cova Hub,,Backlog
+Feedback visual de fama ganha a cada ciclo (+X fama no nó Y),Frontend,Fase 2 — O Farol,,Backlog
+Integrar viagem: POST /travel + timer na UI → atualizar zona ao terminar,Frontend,Fase 2 — O Farol,,Backlog
+POST /actions/refine (refina recursos nas estações de refinamento),Backend,Fase 3 — A Cova Hub,Mesmo fluxo do craft. Receitas de refinamento são entradas separadas no recipes.json.,Backlog
+Painel de inventário: slots / peso / lista de itens,Frontend,Fase 2 — O Farol,"Slots usados / total, peso atual / máximo, lista de itens com quantidade e ícone.",Backlog
+"POST /equipment/equip (equipa item, limpa skills da peça trocada da fila)",Backend,,,Backlog
+GET /litania (árvore JSON + progresso do player),Backend,Fase 5 — Combate T2 + A Litania,Retornar árvore do JSON + merge com dados do player. Nó sem linha no banco = bloqueado.,Backlog
+Sub-tela: Skill Queue (exibir + ordenar fila de habilidades),Frontend,,Exibir habilidades disponíveis da peça equipada (Q/W/E + auto-attack). Ordenar por drag ou botões.,Backlog
+Lógica de combate T2: executor de skill queue com cooldowns individuais,Backend,,Iterar fila em loop: se skill disponível (cooldown zerado) → executar. Senão → avançar. Se tudo em CD → aguardar a mais próxima.,Backlog
+Determinar peça com maior contribuição de dano → creditar fama no nó correto do board,Backend,,Regra 2: verificar qual slot causou mais dano. Creditar fama no nó da peça correspondente.,Backlog
+"Fama de coleta T2 creditada no nó correto (Woodcutter, Miner, Skinner)",Backend,Fase 4 — Zonas T2,"Já implementado na Fase 2, mas garantir que o nó correto é identificado por tipo de recurso.",Backlog
+Sub-tela: Loadout (slots de equipamento + abrir inventário filtrado por slot),Frontend,,"Slots de gear. Ao clicar num slot, abrir inventário filtrado pelo tipo do slot.",Backlog
+POST /equipment/skill-queue (salva ordem da fila de habilidades),Backend,,,Backlog
+Migration SQL player_equipment + queries sqlc,Backend,,"Criar migrations/003_create_player_equipment.up.sql (slots: weapon, head, chest, boots, bag) e migrations/004_create_skill_queue.up.sql. Escrever internal/equipment/query.sql: GetEquipment, EquipItem, UnequipSlot, GetSkillQueue, SaveSkillQueue. Handler em internal/equipment/handler.go, lógica em internal/equipment/service.go.",Backlog
+Migration SQL player_litania_progress + queries sqlc,Backend,,"Criar migrations/005_create_player_litania_progress.up.sql. Escrever internal/litania/query.sql: GetNodeProgress, UpsertFame, GetAllProgressByPlayer, UnlockNode. Handler em internal/litania/handler.go, lógica em internal/litania/service.go (inclui regras de distribuição de fama).",Backlog
+Flag tutorial_completed no player_state + validação na rota de viagem,Backend,Fase 6 — Saída,Ação de viajar para Cidade Iniciante só disponível quando tutorial_completed = true.,Backlog
+Tela: Seleção de Cidade Inicial (5 opções),Frontend,Fase 6 — Saída,5 opções de cidade. Visual apenas na PoC — todas levam ao mesmo estado de saída.,Backlog
+Tela: Tutorial Concluído (mensagem + gateway para o mundo pós-PoC),Frontend,Fase 6 — Saída,,Backlog
+Tela: A Litania (nós + barras de progresso + desbloqueios),Frontend,Fase 5 — Combate T2 + A Litania,"Cinza = bloqueado, cor = desbloqueado, barra de progresso = em andamento. Na PoC: lista agrupada por branch é suficiente.",Backlog
+GET /inventory (retorna lista de itens com quantity e peso),Backend,Fase 2 — O Farol,Retornar lista de itens com quantity e peso total. Necessário para o frontend montar o painel de inventário.,Backlog
+Componente: progresso do tutorial (passo atual + condição de conclusão),Frontend,Fase 2 — O Farol,Exibir o passo atual do tutorial e o que falta para concluí-lo. Pode ser um banner simples na tela de zona.,Backlog
+Lógica de verificação dos passos do tutorial (TutorialService),Backend,Fase 2 — O Farol,Ler tutorial/steps.json e verificar a cada ação concluída se a condição do passo atual foi atingida. Avançar o passo e retornar flag de progresso ao cliente.,Backlog
+Criar resources/nodes.json (nós de recurso por zona/bioma),Dados,Fase 0 — Setup,Nós de recurso por zona e bioma. Define o que pode ser coletado em cada ponto do mapa.,Backlog
